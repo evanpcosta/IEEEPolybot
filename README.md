@@ -1,35 +1,34 @@
-# Polybot
+# Active Learning for Python
+[![Build Status](https://travis-ci.org/globus-labs/active-learning.svg?branch=master)](https://travis-ci.org/globus-labs/active-learning)
+[![Coverage Status](https://coveralls.io/repos/github/globus-labs/active-learning/badge.svg?branch=master)](https://coveralls.io/github/globus-labs/active-learning?branch=master)
 
-[![Build Status](https://travis-ci.com/materials-data-facility/polybot.svg?branch=master)](https://travis-ci.com/materials-data-facility/polybot)
-[![Coverage Status](https://coveralls.io/repos/github/materials-data-facility/polybot/badge.svg?branch=master)](https://coveralls.io/github/materials-data-facility/polybot?branch=master)
-
-A server for controlling the robot synthesis of thin-film polymeric materials.
+Toolkit for active learning in Python designed to be used in conjunction with scikit-learn models.
 
 ## Installation
 
-We describe our full environment using an Anaconda environment file,
-[`environment.yml`](./environment.yml).
-Install it by calling:
+You can install by cloning with `git clone https://github.com/globus-labs/active-learning` followed
+by `pip install -e ./active-learning`
 
-`conda env create --file environment.yml`
+## Usage
 
-The package requirements are also listed in [`requirements.txt`](./requirements.txt),
-which you can use to build the environment using `pip`:
+Examples and tutorials TBD.
 
-`pip install -e .`
+## See Also 
 
-## Running Polybot
+Roman Garnett's active learning [toolbox for Matlab](https://github.com/rmgarnett/active_learning).
 
-Activate the environment, if you used Anaconda,
-and then call `./run.sh` to 
-launch a server that is accessible from localhost only.
+## License
 
-## Using Polybot
+Copyright 2018 Theodore Ando
 
-Polybot comes with a command line interface, also named "`polybot`".
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this software except in compliance with the License.
+You may obtain a copy of the License at
 
-At present, the only command is to upload data to the server:
+   http://www.apache.org/licenses/LICENSE-2.0
 
-`polybot upload experiment_name file.csv`
-
-Call `polybot --help` to see the full list of operations.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
