@@ -1,14 +1,9 @@
 """Command line interface for polybot"""
 
 import logging
-import os
 from argparse import ArgumentParser, Namespace
 
 import requests
-from preprocess_functions.dichroic_pre import dichroic_pre
-from preprocess_functions.electrical_pre import electrical_pre
-import pandas as pd
-
 
 from polybot.version import __version__
 
@@ -33,51 +28,6 @@ def upload(args: Namespace):
     else:
         print(f'Failed with a status: {result.json()}')
 
-def preprocess(args: Namespace):
-    """ Preprocess data in the folder and add to master csv"""
-
-    # finds the name of the experiment based on the directory name
-    exp_name = args.dirpath.split("/")[-1]
-
-    if not os.path.isdir(args.dirpath):
-        logger.info("Directory",args.dirpath, "not available")
-        return
-
-    json = {}
-    for filename in os.listdir(args.dirpath):
-        name = filename.split(".")[0]
-        print(name)
-
-        # some way to distinguish between the 2 types of files
-        # needs to be changed if the naming scheme changes
-        if "dichroic_data" in name:
-            # finds the name of all samples and their dichroic ratios
-            ratio_names, ratios = dichroic_pre(os.path.join(args.dirpath, filename))
-            ratio_tuples = list(zip(ratio_names, ratios))
-
-            # loads all of the ratio information into a database
-            for ii in range(len(ratio_names)):
-                json[ratio_names[ii]] = {"dichroic_ratio":ratios[ii]}
-        elif "electrical_data" in name:
-            # for every electrical datafile
-            for data_name in os.listdir(os.path.join(args.dirpath, filename)):
-                sample_name = data_name.split(".")[0]
-                # get the m and b
-                m, b = electrical_pre(os.path.join(args.dirpath, filename+"/"+data_name))
-
-                # store it in the db
-                if sample_name not in json:
-                    json[sample_name] = {}
-                json[sample_name]["m"] = m
-                json[sample_name]["b"] = b
-
-    db = pd.DataFrame.from_dict(json)
-    db.to_csv("preprocessed/"+exp_name+".csv", encoding = "utf-8", date_format="%s")
-
-    # with open(args.file, 'rb') as fp:
-    #     content = fp.read()
-    # logger.info(f'Read in a {len(content) / 1024: .2f} kB file')
-
 
 def create_parser() -> ArgumentParser:
     """Create the argument parser for the CLI tool"""
@@ -97,11 +47,6 @@ def create_parser() -> ArgumentParser:
     upload_parser.add_argument('name', help='Name of the experiment', type=str)
     upload_parser.add_argument('file', help='Path to the file to upload', type=str)
     upload_parser.set_defaults(function=upload)
-
-    # Create preprocess functionality
-    preprocess_parser = sub_parser.add_parser("preprocess", help = "Preprocess file")
-    preprocess_parser.add_argument('dirpath', help = "Path of the experiment directory", type = str)
-    preprocess_parser.set_defaults(function=preprocess)
     return parser
 
 

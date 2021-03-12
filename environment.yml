@@ -1,4 +1,4 @@
-name: polybot
+name: polybot_group
 channels:
   - defaults
   - conda-forge
@@ -7,7 +7,7 @@ dependencies:
   - flask==1.1.*
   - matplotlib>3
   - pandas==1.*
-  - pydantic>=1.15
+  - pydantic
   - pytest
   - pytest-cov
   - pytest-flask
