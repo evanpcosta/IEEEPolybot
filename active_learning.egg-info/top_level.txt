@@ -1,2 +1,0 @@
-polybot
-query_strats
