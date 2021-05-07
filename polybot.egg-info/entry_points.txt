@@ -1,0 +1,3 @@
+[console_scripts]
+polybot = polybot.cli:main
+

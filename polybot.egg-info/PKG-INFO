@@ -1,0 +1,18 @@
+Metadata-Version: 1.2
+Name: polybot
+Version: 0.0.1
+Summary: Server to analyze, monitor and control robotic experiments performed at CNM
+Home-page: https://github.com/materials-data-facility/polybot
+Author: Logan Ward
+Author-email: lward@anl.gov
+License: Apache License, Version 2.0
+Description: UNKNOWN
+Platform: UNKNOWN
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Science/Research
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Natural Language :: English
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Topic :: Scientific/Engineering
+Requires-Python: >=3.7
