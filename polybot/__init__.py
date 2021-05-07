@@ -3,6 +3,7 @@ import platform
 import os
 import csv 
 import implementML
+import json
 from flask import Flask, render_template, send_file, flash, request, redirect, url_for, send_from_directory
 from polybot.version import __version__  # noqa: F401
 from flask_cors import CORS
@@ -43,8 +44,9 @@ def create_app(test_config: dict = None) -> Flask:
             flash('No file part')
             return redirect(request.url)
         json_data = request.get_json()
-        print(json_data)
+        print("FIRST PRINT", json_data)
         # `file` -> actual file type; can send this through buffer
+
         file = request.files['file'] 
         
         print(file.filename)
@@ -57,10 +59,13 @@ def create_app(test_config: dict = None) -> Flask:
             
         output_filepath = join_to_static_dir("out.csv")
         
-        
-        # unpack json data
-        # json_data = request.get_json()
-        # num_to_select = json_data["num_to_select"] 
+        json_data = json.loads(request.files["parameters"].read())
+        num_to_select = int(json_data['numExperiments'])
+        acquisition = json_data['acquisition']
+        print("JSON DATA", json_data)
+        print("num to select", num_to_select)
+        print("acquisition", acquisition)
+        # num_to_select = json_data[""] 
         # acquisition = json_data[""] 
 
         """
@@ -69,7 +74,7 @@ def create_app(test_config: dict = None) -> Flask:
 
         """
         p = "C:/Users/alanx/OneDrive/Desktop/ieeepolybort/polybot/static/csv"
-        implementML.active_learning(download_filename, num_to_select = 10 ,acquisition = "random", target_file_name=output_filepath)
+        implementML.active_learning(download_filename, num_to_select = num_to_select ,acquisition = acquisition, target_file_name=output_filepath)
         print(join_to_static_dir(""))
         return send_from_directory(p, filename="out.csv", as_attachment = True)
 
