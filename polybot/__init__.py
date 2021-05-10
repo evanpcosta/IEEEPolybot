@@ -73,10 +73,11 @@ def create_app(test_config: dict = None) -> Flask:
         send_from_directory("out.csv") -> look for "out.csv" in current dir
 
         """
-        p = "C:/Users/alanx/OneDrive/Desktop/ieeepolybort/polybot/static/csv"
+        # p = "C:/Users/alanx/OneDrive/Desktop/ieeepolybort/polybot/static/csv"
+        pathAbstracted = os.path.abspath("polybot/static/csv")
         implementML.active_learning(download_filename, num_to_select = num_to_select ,acquisition = acquisition, target_file_name=output_filepath)
-        print(join_to_static_dir(""))
-        return send_from_directory(p, filename="out.csv", as_attachment = True)
+        print("currentPath:", pathAbstracted)
+        return send_from_directory(pathAbstracted, filename="out.csv", as_attachment = True)
 
     @app.route('/test')
     def test_file():
