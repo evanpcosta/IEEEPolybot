@@ -31,10 +31,6 @@ def create_app(test_config: dict = None) -> Flask:
         return render_template('home.html',
                                message=f'Running on {platform.node()} since {start_time}')
     
-    # @app.route("/chooseExperiment")
-    # def getExperiment():
-        #get react app the data from the form 
-        # return implementML.implementML()
     @app.route('/upload', methods = ["POST"])
     def handleUpload():
         # json_data = request.get_json()
@@ -71,7 +67,6 @@ def create_app(test_config: dict = None) -> Flask:
         send_from_directory("out.csv") -> look for "out.csv" in current dir
 
         """
-        # p = "C:/Users/alanx/OneDrive/Desktop/ieeepolybort/polybot/static/csv"
         pathAbstracted = os.path.abspath("polybot/static/csv")
         implementML.active_learning(download_filename, num_to_select = num_to_select ,acquisition = acquisition, target_file_name=output_filepath)
         print("currentPath:", pathAbstracted)
@@ -81,33 +76,8 @@ def create_app(test_config: dict = None) -> Flask:
     def test_file():
         return render_template('test.html')
 
-    @app.route('/download')
-    def download_file():
-        path = "C:/Users/alanx/OneDrive/Desktop/polybot/polybot/static/csv/netflix_titles.csv"
-        return send_file(path, as_attachment=True, cache_timeout=0)
-
     # Load the blueprints
     from .views import ingest
     app.register_blueprint(ingest.bp)
 
     return app
-    
-    app.config["CLIENT"] = "C:/Users/alanx/OneDrive/Desktop/polybot/polybot/static"
-    @app.route("/directory/<path:path>")
-    def get_all(path):
-        print(type(path))
-        try:
-            return send_from_directory(app.config["CLIENT"], filename=path, as_attachment = True)
-        except FileNotFoundError:
-            abort(404)
-    
-    app.config["DOWNLOAD_CSV_PATH"] = "C:/Users/alanx/OneDrive/Desktop/ieeepolybort/polybot/static/csv"     #REMMEBER ENDPOINT TO BE /DOWNLOAD/CSVNAME    
-    @app.route("/download/<csv_id>")
-    def get_csv(csv_id):
-        print('THIS IS A GET REQUEST')
-        filename = f"{csv_id}.csv"
-        print(filename)
-        try:
-            return send_from_directory(app.config["DOWNLOAD_CSV_PATH"], filename=filename, as_attachment=True)
-        except FileNotFoundError:
-            abort(404)
