@@ -65,8 +65,6 @@ def create_app(test_config: dict = None) -> Flask:
         print("JSON DATA", json_data)
         print("num to select", num_to_select)
         print("acquisition", acquisition)
-        # num_to_select = json_data[""] 
-        # acquisition = json_data[""] 
 
         """
         app.py -> current dir
