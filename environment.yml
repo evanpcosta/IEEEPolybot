@@ -14,5 +14,6 @@ dependencies:
   - pip
   - scikit-learn
   - flake8
+  - flask-cors
   - pip:
     - -e .
